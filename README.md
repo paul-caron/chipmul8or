@@ -18,5 +18,6 @@ make
 ./main "Name of ROM file"
 
 eg:
-
+``` sh
 ./main PONG
+```
