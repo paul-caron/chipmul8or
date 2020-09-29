@@ -1,4 +1,5 @@
 
 # chipmulator
 
-Needs ncurses library installed.
+Needs ncurses library installed. Sound is working through the terminal bell character.
+
