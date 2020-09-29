@@ -1,12 +1,13 @@
 #include <cstdint>
 #include <string>
+#include <array>
 
 class Chip8{
 public:
-    uint8_t gfx[64*32];
-    uint8_t V[16];
-    uint8_t key[16];
-    uint16_t stack[16];
+    std::array<uint8_t,2048> gfx;
+    std::array<uint8_t,16> V;
+    std::array<uint8_t,16> key;
+    std::array<uint16_t,16> stack;
     uint16_t sp;
     uint16_t opcode;
     uint16_t pc;
@@ -19,7 +20,7 @@ public:
 private:
     int instruction_count=0; //slows timers
     void drawSprite();
-    uint8_t memory[4096];
+    std::array<uint8_t,4096> memory;
 };
 
 

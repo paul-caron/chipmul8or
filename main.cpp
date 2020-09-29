@@ -31,6 +31,19 @@ void stop(int signum){
     exit(0);
 }
 
+void chip8Status(Chip8 c8){
+    attroff(A_REVERSE);
+    for(int i=0;i<16;++i)
+        mvprintw(i,65,"V%2x: %2x",i,c8.V.at(i));
+    mvprintw(16,65,"I: %x",c8.I);
+    mvprintw(17,65,"sp: %x",c8.sp);
+    mvprintw(18,65,"delay: %x",c8.delay_timer);
+    mvprintw(19,65,"sound: %x",c8.sound_timer);
+    mvprintw(20,64,"opcode: %x",c8.opcode);
+    move(31,64);
+    refresh();
+}
+
 int main(int argc, char ** argv){
     signal(SIGINT, stop);
     if(argc <=1) return 0;
@@ -46,7 +59,15 @@ int main(int argc, char ** argv){
     cbreak();
     nodelay(stdscr,true);
     while(true){
-        c8.cycle();
+        try{
+            c8.cycle();
+        }catch(std::exception e){
+            chip8Status(c8);
+//            nocbreak();
+            nodelay(stdscr,false);
+            getch();
+            stop(0);
+        }
         this_thread::sleep_for(chrono::milliseconds(2));
         int i=0;
         for(int y=0;y<32;++y)
@@ -56,6 +77,7 @@ int main(int argc, char ** argv){
             mvaddch(y,x,' ');
         }
         refresh();
+        chip8Status(c8);
         int key = getch();
         if(key!=ERR){
             for(auto & k: c8.key) k=false;
