@@ -81,7 +81,7 @@ void Chip8::drawSprite(){
         spriteRowData=memory[I+row];
         for(int col=0;col<8;++col)
             if(spriteRowData&(128>>col))
-                if(!(gfx.at(64*((Vy+row)%32)+(Vx+col)%64)^=1)) V[0xF]=1;//collision detection
+                if(!(gfx.at(64*((Vy+row)%32)+((Vx+col)%64))^=1)) V[0xF]=1;//collision detection
     }
     pc+=2;
 }
