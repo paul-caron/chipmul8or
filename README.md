@@ -15,9 +15,9 @@ make
 
 # Run
 
-./main "Name of ROM file"
+./chipmul8or "Path of ROM file"
 
 eg:
 ``` sh
-./main PONG
+./chipmul8or ./roms/PONG
 ```
