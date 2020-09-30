@@ -1,5 +1,5 @@
-main: main.o chip8.o
-	g++ -std=c++11 -o main main.o chip8.o -lncurses
+chipmul8or: main.o chip8.o
+	g++ -std=c++11 -o chipmul8or main.o chip8.o -lncurses
 
 main.o: main.cpp
 	g++ -std=c++11 -c -o main.o main.cpp
