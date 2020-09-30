@@ -1,5 +1,5 @@
 
-# Chipmulator
+# Chipmul8or
 
 Plays Chip8 ROM files.
 
