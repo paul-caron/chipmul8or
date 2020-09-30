@@ -9,7 +9,7 @@ Needs ncurses library installed. Sound is working through the terminal bell char
 
 ``` sh
 git clone https://www.github.com/paul-caron/chipmul8or
-cd chipmulator
+cd chipmul8or
 make
 ```
 
