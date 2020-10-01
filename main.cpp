@@ -63,10 +63,6 @@ int main(int argc, char ** argv){
         try{
             c8.cycle();
         }catch(std::exception e){
-            chip8Status(c8);
-//            nocbreak();
-            nodelay(stdscr,false);
-            getch();
             stop(0);
         }
         this_thread::sleep_for(chrono::milliseconds(2-c8.extended_mode));

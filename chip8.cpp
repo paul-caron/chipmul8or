@@ -177,7 +177,9 @@ void Chip8::cycle() {
                          case 0xFC: left();
                                     pc += 2;
                                     break;
-                         case 0xFD: exit(0); pc += 2; break;
+                         //restart rom instead of quiting
+                         case 0xFD: pc += 0x0200;
+                                    break;
                          case 0xFE: extended_mode = 0;
                                     pc += 2;
                                     break;
@@ -236,6 +238,7 @@ void Chip8::cycle() {
                                       V[x(opcode)] >>= 1;
                                       pc += 2;
                                       break;
+//
                          case 0x0007: if(V[x(opcode)] > V[y(opcode)])
                                           V[0xF] = 0;
                                       else
@@ -298,7 +301,10 @@ void Chip8::cycle() {
                                       I += V[x(opcode)];
                                       pc += 2;
                                       break;
-                         case 0x0029: I = V[x(opcode)] * 5;
+                         //if Vx high nibble is 1, point I to super font set
+                         case 0x0029: if((V[x(opcode)] & 0xF000) == 0x1000)
+                                      I = 80 + V[x(opcode)]*10;
+                                      else I = V[x(opcode)] * 5;
                                       pc += 2;
                                       break;
                          //point I to 10byte font sprite for Vx
@@ -310,15 +316,18 @@ void Chip8::cycle() {
                                       memory.at(I + 2) = V[x(opcode)] % 10;
                                       pc += 2;
                                       break;
+//
                          case 0x0055: for(int i=0;i<=x(opcode);++i)
                                           memory.at(I + i) = V[i];
-                                      I += x(opcode) + 1;
+                                      if(!extended_mode)
+                                          I += x(opcode) + 1;
                                       pc += 2;
                                       break;
-
+//
                          case 0x0065: for(int i=0;i<=x(opcode);++i)
                                           V[i] = memory.at(I + i);
-                                      I += x(opcode) + 1;
+                                      if(!extended_mode)
+                                          I += x(opcode)+ 1;
                                       pc += 2;
                                       break;
                          //Store V0..VX in RPL user flags (X <= 7)
@@ -345,4 +354,5 @@ void Chip8::cycle() {
     ++instruction_count;
 }
 
-	
+
+
