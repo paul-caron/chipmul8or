@@ -33,14 +33,15 @@ void stop(int signum){
 
 void chip8Status(Chip8 c8){
     attroff(A_REVERSE);
+    int x=c8.extended_mode*64+65;
     for(int i=0;i<16;++i)
-        mvprintw(i,65,"V%2x: %2x",i,c8.V.at(i));
-    mvprintw(16,65,"I: %x",c8.I);
-    mvprintw(17,65,"sp: %x",c8.sp);
-    mvprintw(18,65,"delay: %x",c8.delay_timer);
-    mvprintw(19,65,"sound: %x",c8.sound_timer);
-    mvprintw(20,64,"opcode: %x",c8.opcode);
-    move(31,64);
+        mvprintw(i,x,"V%2x: %2x",i,c8.V.at(i));
+    mvprintw(16,x,"I: %x",c8.I);
+    mvprintw(17,x,"sp: %x",c8.sp);
+    mvprintw(18,x,"delay: %x",c8.delay_timer);
+    mvprintw(19,x,"sound: %x",c8.sound_timer);
+    mvprintw(20,x,"opcode: %x",c8.opcode);
+    move(31,x-1);
     refresh();
 }
 
@@ -68,10 +69,10 @@ int main(int argc, char ** argv){
             getch();
             stop(0);
         }
-        this_thread::sleep_for(chrono::milliseconds(2));
+        this_thread::sleep_for(chrono::milliseconds(2-c8.extended_mode));
         int i=0;
-        for(int y=0;y<32;++y)
-        for(int x=0;x<64;++x){
+        for(int y=0;y<(1+c8.extended_mode)*32;++y)
+        for(int x=0;x<(1+c8.extended_mode)*64;++x){
             if(c8.gfx[i++]) attron(A_REVERSE);
             else attroff(A_REVERSE);
             mvaddch(y,x,' ');
