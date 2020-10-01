@@ -178,7 +178,7 @@ void Chip8::cycle() {
                                     pc += 2;
                                     break;
                          //restart rom instead of quiting
-                         case 0xFD: pc += 0x0200;
+                         case 0xFD: pc = 0x0200;
                                     break;
                          case 0xFE: extended_mode = 0;
                                     pc += 2;
