@@ -1,7 +1,7 @@
 
 # Chipmul8or
 
-Plays Chip8 ROM files. Features a real time registers viewer.
+Plays Chip8 ROM files (and Super Chip 8 ROMs). Features a real time registers viewer.
 
 Needs ncurses library installed. Sound is working through the terminal bell character. It's just wonderful.
 
