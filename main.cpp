@@ -62,7 +62,11 @@ int main(int argc, char ** argv){
     while(true){
         try{
             c8.cycle();
-        }catch(std::exception e){
+        }catch(const char * e){
+            cout<<e<<endl;
+            stop(0);
+        }catch(const std::exception & e){
+            cout << "exception: " << e.what() <<endl;
             stop(0);
         }
         this_thread::sleep_for(chrono::milliseconds(2-c8.extended_mode));

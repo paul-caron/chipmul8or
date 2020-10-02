@@ -8,7 +8,11 @@ using namespace std;
 
 uint8_t fontset[80] =
 {
-    0xF0, 0x90, 0x90, 0x90, 0xF0, //0
+    0b11110000,
+    0b10010000,
+    0b10010000,
+    0b10010000,
+    0b11110000,
     0x20, 0x60, 0x20, 0x20, 0x70, //1
     0xF0, 0x10, 0xF0, 0x80, 0xF0, //2
     0xF0, 0x10, 0xF0, 0x10, 0xF0, //3
@@ -190,7 +194,7 @@ void Chip8::cycle() {
                          default: if(y(opcode)==0xC){
                                       down();
                                       pc += 2;
-                                  }else exit(1);
+                                  }else throw "Incorrect opcode";
                      }
                      break;
         case 0x1000: pc = nnn(opcode);  break;
@@ -251,7 +255,7 @@ void Chip8::cycle() {
                                       V[x(opcode)] <<= 1;
                                       pc += 2;
                                       break;
-                         default: exit(1);
+                         default: throw "Incorrect opcode";
                      }
                      break;
         case 0x9000: if (V[x(opcode)] != V[y(opcode)]) pc += 4;
@@ -276,7 +280,7 @@ void Chip8::cycle() {
                                           pc +=  4;
                                       else pc += 2;
                                       break;
-                         default: exit(1);
+                         default: throw "Incorrect opcode";
                      }
                      break;
         case 0xF000: switch(opcode & 0x00FF) {
@@ -341,10 +345,10 @@ void Chip8::cycle() {
                                           V[i] = Rpl.at(i);
                                       pc += 2;
                                       break;
-                         default: exit(1);
+                         default: throw "Incorrect opcode";
                      }
                      break;
-        default: exit(1);
+        default: throw "Incorrect opcode";
     }
 
     if(instruction_count == 9*(1+extended_mode)){
